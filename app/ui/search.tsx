@@ -8,13 +8,14 @@ import {
   useSearchParams,
 } from "next/navigation";
 import { ChangeEvent } from "react";
+import { debounce } from "../lib/utils";
 
 export default function Search({ placeholder }: { placeholder: string }) {
   const serachParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = debounce((event: ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
     const params = new URLSearchParams(serachParams);
     if (val) {
@@ -24,7 +25,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }
     replace(`${pathname}?${params.toString()}`);
     console.log("Search input changed:", event.target.value);
-  };
+  }, 300);
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
