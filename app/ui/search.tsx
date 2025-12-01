@@ -18,6 +18,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const onChangeHandler = debounce((event: ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
     const params = new URLSearchParams(serachParams);
+    params.set("page", "1");
     if (val) {
       params.set("query", val);
     } else {
